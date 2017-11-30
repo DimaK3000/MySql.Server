@@ -17,6 +17,8 @@ See [Example.cs](https://github.com/stumpdk/MySql.Server/blob/master/MySql.Serve
 ```c#
         //Get an instance
         MySqlServer dbServer = MySqlServer.Instance;
+        // or
+        MySqlServer dbServer = MySqlServer.GetInstance("C:\\temp\\mysql");
         
         //Start the server
         dbServer.StartServer();
