@@ -288,8 +288,11 @@ namespace MySql.Server {
 
 			for (int i = 0; i < runningInstancesIds.Length; i++) {
 				try {
-					Process p = Process.GetProcessById(Int32.Parse(runningInstancesIds[i]));
-					p.Kill();
+					Process[] processlist = Process.GetProcesses();
+					var process = processlist.FirstOrDefault(x => x.Id == Int32.Parse(runningInstancesIds[i]));
+					if (process != null) {
+						process.Kill();
+					}
 				} catch (Exception e) {
 					System.Console.WriteLine("Could not kill process: " + e.Message);
 				}
