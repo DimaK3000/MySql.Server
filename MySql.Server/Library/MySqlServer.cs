@@ -290,7 +290,7 @@ namespace MySql.Server {
 				try {
 					Process[] processlist = Process.GetProcesses();
 					var process = processlist.FirstOrDefault(x => x.Id == Int32.Parse(runningInstancesIds[i]));
-					if (process != null) {
+					if (process != null && !process.HasExited) {
 						process.Kill();
 					}
 				} catch (Exception e) {
