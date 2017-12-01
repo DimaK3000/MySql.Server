@@ -12,6 +12,7 @@ namespace MySql.Server {
 	/// A singleton class controlling test database initializing and cleanup
 	/// </summary>
 	public class MySqlServer {
+
 		private string _mysqlDirectory;
 		private string _dataDirectory;
 		private string _dataRootDirectory;
@@ -145,6 +146,7 @@ namespace MySql.Server {
 		private void waitForStartup() {
 			int totalWaitTime = 0;
 			int sleepTime = 100;
+			int maxWaitTimes = 50;
 
 			Exception lastException = new Exception();
 
@@ -153,11 +155,10 @@ namespace MySql.Server {
 			}
 
 			while (!_testConnection.State.Equals(System.Data.ConnectionState.Open)) {
-				if (totalWaitTime > 10000)
+				if (totalWaitTime == (sleepTime * maxWaitTimes)) {
 					throw new Exception("Server could not be started." + lastException.Message);
-
+				}
 				totalWaitTime = totalWaitTime + sleepTime;
-
 				try {
 					_testConnection.Open();
 				} catch (Exception e) {
